@@ -51,8 +51,15 @@ for epoch in range(num_epochs):
     
     mobilenet_v3_large.eval()  # Set the model to evaluation mode
 
+
+#Eval
 correct = 0
 total = 0
+
+# Assuming you have a 'val_data_path/' directory with the same structure as 'train_data_path/'
+val_dataset = datasets.ImageFolder(root='val_data_path/', transform=transform)
+val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False) # No need to shuffle the validation set
+
 with torch.no_grad():
     for inputs, labels in val_loader:
         outputs = mobilenet_v3_large(inputs)
