@@ -48,11 +48,10 @@ for epoch in range(num_epochs):
         running_loss += loss.item()
     
     print(f"Epoch [{epoch+1}/{num_epochs}], Loss: {running_loss/len(train_loader):.4f}")
-    
-    mobilenet_v3_large.eval()  # Set the model to evaluation mode
-
 
 #Eval
+import torch.nn.functional as func
+
 correct = 0
 total = 0
 
@@ -60,10 +59,25 @@ total = 0
 val_dataset = datasets.ImageFolder(root='val_data_path/', transform=transform)
 val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False) # No need to shuffle the validation set
 
+mobilenet_v3_large.eval()
+
+# Get the class names from your dataset's classes attribute
+class_names = train_dataset.classes
+
 with torch.no_grad():
     for inputs, labels in val_loader:
         outputs = mobilenet_v3_large(inputs)
+        
+        # Apply softmax to get probabilities (along dimension 1, which is the class dimension)
+        probabilities = func.softmax(outputs, dim=1)
         _, predicted = torch.max(outputs.data, 1)
+        
+        for i in range(inputs.size(0)):
+            sample_probabilities = probabilities[i].tolist()
+            print(f"Sample {i+1} Probabilities:")
+            for j, prob in enumerate(sample_probabilities):
+                print(f"  {class_names[j]}: {prob:.4f}")
+        
         total += labels.size(0)
         correct += (predicted == labels).sum().item()
 accuracy = 100 * correct / total
