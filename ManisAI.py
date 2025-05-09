@@ -1,15 +1,15 @@
 import torch
 import torchvision.models as models
 
+train_cd = 'train_data_path/'
+test_cd = 'train_data_path/'
+
 # Load MobileNetV3-Large pretrained on ImageNet
 mobilenet_v3_large = models.mobilenet_v3_large(pretrained=True)
 
-# Load MobileNetV3-Small pretrained on ImageNet
-mobilenet_v3_small = models.mobilenet_v3_small(pretrained=True)
-
 import torch.nn as nn
-# Modify the final layer for a custom number of classes (e.g., 8)
-mobilenet_v3_large.classifier[8] = nn.Linear(in_features=1280, out_features=10)
+# Modify the final layer for a custom number of classes
+mobilenet_v3_large.classifier[3] = nn.Linear(in_features=1280, out_features=8)
 
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
@@ -22,7 +22,7 @@ transform = transforms.Compose([
 ])
 
 # Load dataset
-train_dataset = datasets.ImageFolder(root='train_data_path/', transform=transform)
+train_dataset = datasets.ImageFolder(root=train_cd, transform=transform)
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 
 import torch.optim as optim
@@ -55,8 +55,7 @@ import torch.nn.functional as func
 correct = 0
 total = 0
 
-# Assuming you have a 'val_data_path/' directory with the same structure as 'train_data_path/'
-val_dataset = datasets.ImageFolder(root='val_data_path/', transform=transform)
+val_dataset = datasets.ImageFolder(root=test_cd, transform=transform)
 val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False) # No need to shuffle the validation set
 
 mobilenet_v3_large.eval()
