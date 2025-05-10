@@ -97,3 +97,5 @@ with torch.no_grad():
         correct += (predicted == labels).sum().item()
 accuracy = 100 * correct / total
 print(f'Validation Accuracy: {accuracy:.2f}%')
+
+torch.save(mobilenet_v3_large.state_dict(), 'mobilenetv3_trained.pth')
