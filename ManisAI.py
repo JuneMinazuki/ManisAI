@@ -1,19 +1,20 @@
 import torch
 import torchvision.models as models
+from torchvision.models import MobileNet_V3_Large_Weights
 
 train_cd = 'Training/'
 test_cd = 'Testing/'
 
 #Parameter
 learning_rate = 0.01
-num_epochs = 100
+num_epochs = 50
 batch_size = 32
 step_size = 10
 gamma = 0.1
 weight_decay = 1e-4
 
 # Load MobileNetV3-Large pretrained on ImageNet
-mobilenet_v3_large = models.mobilenet_v3_large(pretrained=True)
+mobilenet_v3_large = models.mobilenet_v3_large(weights=MobileNet_V3_Large_Weights.IMAGENET1K_V1)
 
 import torch.nn as nn
 # Modify the final layer for a custom number of classes
@@ -26,7 +27,7 @@ from torch.utils.data import DataLoader
 transform = transforms.Compose([
     transforms.RandomResizedCrop(224, scale=(0.8, 1.0), ratio=(0.75, 1.333)),
     transforms.RandomHorizontalFlip(),
-    transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),
+    transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),
     transforms.RandomRotation(degrees=15),
     transforms.ToTensor(),
     transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
