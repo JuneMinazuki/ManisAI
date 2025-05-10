@@ -6,8 +6,8 @@ train_cd = 'Training/'
 test_cd = 'Testing/'
 
 #Parameter
-learning_rate = 0.05
-num_epochs = 20
+learning_rate = 0.01
+num_epochs = 50
 batch_size = 64
 step_size = 10
 gamma = 0.1
@@ -35,7 +35,7 @@ transform = transforms.Compose([
 
 # Load dataset
 train_dataset = datasets.ImageFolder(root=train_cd, transform=transform)
-train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=4)
+train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
 import torch.optim as optim
 # Define the loss function and optimizer
@@ -43,6 +43,8 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(mobilenet_v3_large.parameters(), lr=learning_rate, weight_decay=weight_decay)
 scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=step_size, gamma=gamma)
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+mobilenet_v3_large.to(device)
 # Training loop
 mobilenet_v3_large.train()
 for epoch in range(num_epochs):
@@ -70,7 +72,7 @@ correct = 0
 total = 0
 
 val_dataset = datasets.ImageFolder(root=test_cd, transform=transform)
-val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False, num_workers=4) # No need to shuffle the validation set
+val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False) # No need to shuffle the validation set
 
 mobilenet_v3_large.eval()
 
