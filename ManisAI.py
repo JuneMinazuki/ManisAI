@@ -1,8 +1,8 @@
 import torch
 import torchvision.models as models
 
-train_cd = 'train_data_path/'
-test_cd = 'train_data_path/'
+train_cd = 'Training/'
+test_cd = 'Testing/'
 
 # Load MobileNetV3-Large pretrained on ImageNet
 mobilenet_v3_large = models.mobilenet_v3_large(pretrained=True)
