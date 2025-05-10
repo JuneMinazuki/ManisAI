@@ -6,9 +6,9 @@ train_cd = 'Training/'
 test_cd = 'Testing/'
 
 #Parameter
-learning_rate = 0.01
-num_epochs = 50
-batch_size = 32
+learning_rate = 0.05
+num_epochs = 20
+batch_size = 64
 step_size = 10
 gamma = 0.1
 weight_decay = 1e-4
@@ -35,7 +35,7 @@ transform = transforms.Compose([
 
 # Load dataset
 train_dataset = datasets.ImageFolder(root=train_cd, transform=transform)
-train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=4)
 
 import torch.optim as optim
 # Define the loss function and optimizer
@@ -70,7 +70,7 @@ correct = 0
 total = 0
 
 val_dataset = datasets.ImageFolder(root=test_cd, transform=transform)
-val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False) # No need to shuffle the validation set
+val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False, num_workers=4) # No need to shuffle the validation set
 
 mobilenet_v3_large.eval()
 
