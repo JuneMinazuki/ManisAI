@@ -14,7 +14,7 @@ class SimpleNet(nn.Module):
         x = self.fc2(x)
         return x
     
-model_path = 'mobilenetv3_trained.pth'  # Replace with the actual path
+model_path = 'mobilenetv3_trained.pth'
 state_dict = torch.load(model_path, map_location=torch.device('cpu'))
     
 model = mobilenet_v3_large(num_classes=8, weights=None)
