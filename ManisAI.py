@@ -37,6 +37,12 @@ transform = transforms.Compose([
 train_dataset = datasets.ImageFolder(root=train_cd, transform=transform)
 train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
+# Get the class names from your dataset's classes attribute
+kuih_dict = {}
+class_names = train_dataset.classes
+for i in range(len(class_names)):
+    kuih_dict[i+1] = class_names[i]
+
 import torch.optim as optim
 # Define the loss function and optimizer
 criterion = nn.CrossEntropyLoss()
@@ -76,23 +82,20 @@ val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False) # No need to 
 
 mobilenet_v3_large.eval()
 
-# Get the class names from your dataset's classes attribute
-class_names = train_dataset.classes
-
 with torch.no_grad():
     for inputs, labels in val_loader:
         outputs = mobilenet_v3_large(inputs)
-        
+
         # Apply softmax to get probabilities (along dimension 1, which is the class dimension)
         probabilities = func.softmax(outputs, dim=1)
         _, predicted = torch.max(outputs.data, 1)
-        
+
         for i in range(inputs.size(0)):
             sample_probabilities = probabilities[i].tolist()
-            print(f"Sample {i+1} Probabilities:")
+            print(f"{i+1} - Predicted: {predicted}, Answer: {labels}")
             for j, prob in enumerate(sample_probabilities):
                 print(f"  {class_names[j]}: {prob:.4f}")
-        
+
         total += labels.size(0)
         correct += (predicted == labels).sum().item()
 accuracy = 100 * correct / total
