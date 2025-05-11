@@ -2,6 +2,7 @@ import torch
 import torchvision.models as models
 from torchvision.models import MobileNet_V3_Large_Weights
 
+#Dataset Directory
 train_cd = 'Training/'
 test_cd = 'Testing/'
 
