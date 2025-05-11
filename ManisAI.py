@@ -38,10 +38,8 @@ train_dataset = datasets.ImageFolder(root=train_cd, transform=transform)
 train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
 # Get the class names from your dataset's classes attribute
-kuih_dict = {}
 class_names = train_dataset.classes
-for i in range(len(class_names)):
-    kuih_dict[i+1] = class_names[i]
+kuih_dict = {i + 1: class_name for i, class_name in enumerate(class_names)}
 
 import torch.optim as optim
 # Define the loss function and optimizer
@@ -49,8 +47,6 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(mobilenet_v3_large.parameters(), lr=learning_rate, weight_decay=weight_decay)
 scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=step_size, gamma=gamma)
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-mobilenet_v3_large.to(device)
 # Training loop
 mobilenet_v3_large.train()
 for epoch in range(num_epochs):
@@ -92,9 +88,8 @@ with torch.no_grad():
 
         for i in range(inputs.size(0)):
             sample_probabilities = probabilities[i].tolist()
-            print(f"{i+1} - Predicted: {predicted}, Answer: {labels}")
-            for j, prob in enumerate(sample_probabilities):
-                print(f"  {class_names[j]}: {prob:.4f}")
+            print(f"{i+1} - Predicted: {class_names[predicted[i]]}, Answer: {class_names[labels[i]]}")
+            print(sample_probabilities)
 
         total += labels.size(0)
         correct += (predicted == labels).sum().item()
