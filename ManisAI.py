@@ -7,7 +7,7 @@ train_cd = 'Training/'
 test_cd = 'Testing/'
 
 #Parameter
-learning_rate = 0.01
+learning_rate = 0.001
 num_epochs = 50
 batch_size = 64
 step_size = 10
@@ -19,7 +19,7 @@ mobilenet_v3_large = models.mobilenet_v3_large(weights=MobileNet_V3_Large_Weight
 
 import torch.nn as nn
 # Modify the final layer for a custom number of classes
-mobilenet_v3_large.classifier[3] = nn.Linear(in_features=1280, out_features=6)
+mobilenet_v3_large.classifier[3] = nn.Linear(in_features=1280, out_features=8)
 
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
@@ -52,10 +52,9 @@ scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=step_size, gamm
 mobilenet_v3_large.train()
 for epoch in range(num_epochs):
     running_loss = 0.0
-    for inputs, labels in train_loader:
-        optimizer.step()
-        scheduler.step()
-        
+    for i, (inputs, labels) in train_loader:
+        optimizer.zero_grad() # Add this to reset gradients
+
         # Forward pass
         outputs = mobilenet_v3_large(inputs)
         loss = criterion(outputs, labels)
@@ -65,7 +64,11 @@ for epoch in range(num_epochs):
         optimizer.step()
         
         running_loss += loss.item()
-    
+        
+        if i % 10 == 0:
+            print(f"Epoch [{epoch+1}/{num_epochs}], Batch [{i+1}/{len(train_loader)}], Loss: {loss.item():.4f}")
+
+    scheduler.step()
     print(f"Epoch [{epoch+1}/{num_epochs}], Loss: {running_loss/len(train_loader):.4f}")
 
 #Eval
