@@ -51,8 +51,9 @@ scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=step_size, gamm
 # Training loop
 mobilenet_v3_large.train()
 for epoch in range(num_epochs):
+    i = 0
     running_loss = 0.0
-    for i, (inputs, labels) in train_loader:
+    for inputs, labels in train_loader:
         optimizer.zero_grad() # Add this to reset gradients
 
         # Forward pass
@@ -65,6 +66,7 @@ for epoch in range(num_epochs):
         
         running_loss += loss.item()
         
+        i += 1
         if i % 10 == 0:
             print(f"Epoch [{epoch+1}/{num_epochs}], Batch [{i+1}/{len(train_loader)}], Loss: {loss.item():.4f}")
 
