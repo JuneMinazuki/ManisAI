@@ -4,32 +4,34 @@ A Mobilenetv3 AI model that is trained to classify 8 types of kuih including kek
 This model is train using over 5000 images from the Internet, members' camera and dataset of kuih of Kaggle
 
 ## Report of the newest model:
-### ✅ Overall Accuracy: 0.2832
+### ✅ Overall Accuracy: 0.9974
 
 ### 📊 Per-class metrics:
-| Class          |  Precision  |   Recall   |     F1     |
-|:---------------|:-----------:|:----------:|:----------:|
-| Kek Lapis      |    0.1053   |   0.0208   |   0.0348   |
-| Kuih Lapis     |    0.0612   |   0.0588   |   0.0600   |
-| Kuih Seri Muka |    0.0000   |   0.0000   |   0.0000   |
-| Kuih Talam     |    0.2569   |   0.7327   |   0.3805   |
-| Kuih Ubi Kayu  |    0.3168   |   0.3232   |   0.3200   |
-| Onde-onde      |    0.1333   |   0.0200   |   0.0348   |
+| Class             |  Precision  |   Recall   |     F1     |
+|:------------------|:-----------:|:----------:|:----------:|
+| Kek Lapis         |    0.9897   |   1.0000   |   0.9948   |
+| Kuih Kaswi Pandan |    0.5000   |   1.0000   |   0.6667   |
+| Kuih Ketayap      |    1.0000   |   1.0000   |   1.0000   |
+| Kuih Lapis        |    1.0000   |   1.0000   |   1.0000   |
+| Kuih Seri Muka    |    1.0000   |   1.0000   |   1.0000   |
+| Kuih Talam        |    1.0000   |   1.0000   |   1.0000   |
+| Kuih Ubi Kayu     |    1.0000   |   0.9899   |   0.9949   |
+| Onde-onde         |    1.0000   |   0.9969   |   0.9985   |
 
 ### 🎯 ROC AUC per class:
 | Class          |     AUC     |
 |:---------------|:-----------:|
-| Kek Lapis      |    0.5613   |
-| Kuih Lapis     |    0.5283   |
-| Kuih Seri Muka |    0.3986   |
-| Kuih Talam     |    0.6559   |
-| Kuih Ubi Kayu  |    0.6183   |
-| Onde-onde      |    0.3686   |
+| Kek Lapis      |    1.0000   |
+| Kuih Lapis     |    1.0000   |
+| Kuih Seri Muka |    1.0000   |
+| Kuih Talam     |    1.0000   |
+| Kuih Ubi Kayu  |    1.0000   |
+| Onde-onde      |    1.0000   |
 
 ### 📦 Macro Metrics:
 | <!-- -->         |  <!-- -->   |
 |:-----------------|:-----------:|
-| Marco Precision  |    0.1456   |
-| Macro Recall     |    0.1926   |
-| Macro F1         |    0.1383   |
-| Macro AUC        |    0.4125   |
+| Marco Precision  |    0.9362   |
+| Macro Recall     |    0.9984   |
+| Macro F1         |    0.9569   |
+| Macro AUC        |    1.0000   |
