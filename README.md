@@ -4,6 +4,11 @@ A Mobilenetv3 AI model that is trained to classify 8 types of kuih including kek
 This model is train using over 5000 images from the Internet, members' camera and dataset of kuih of Kaggle
 
 ## Report of the newest model:
+Thanks to my friends for helping me in my development of this model.
+
+Ze Xuan, Shi Wei & Terence Chan
+
+## Report of the newest model:
 ### ✅ Overall Accuracy: 0.9974
 
 ### 📊 Per-class metrics:
